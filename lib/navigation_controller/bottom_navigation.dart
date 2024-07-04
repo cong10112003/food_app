@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:food_app/account/account.dart';
 import 'package:food_app/bookmark/bookmark.dart';
@@ -27,12 +26,14 @@ class _bottom_navigation_controllerState
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     _pageController.dispose();
   }
+
   void _onTabSelected(int index) {
     setState(() {
       _currentIndex = index;
@@ -63,35 +64,41 @@ class _bottom_navigation_controllerState
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
         child: GNav(
-            backgroundColor: Colors.white,
-            color: Colors.black,
-            activeColor: Colors.white,
-            tabBackgroundColor: TColor.primary,
-            padding: EdgeInsets.all(16),
-            gap: 8,
-            tabs: const [
-              GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
-              GButton(
-                icon: Icons.map_outlined,
-                text: 'Discovery',
-              ),
-              GButton(
-                icon: Icons.rate_review,
-                text: 'Top Foodie',
-              ),
-              GButton(
-                icon: Icons.bookmark,
-                text: 'Bookmark',
-              ),
-              GButton(
-                icon: Icons.person,
-                text: 'Account',
-              ),
-
-            ]),
+          backgroundColor: Colors.white,
+          color: Colors.black,
+          activeColor: Colors.white,
+          tabBackgroundColor: TColor.primary,
+          padding: EdgeInsets.all(16),
+          gap: 8,
+          tabs: const [
+            GButton(
+              icon: Icons.home,
+              text: 'Home',
+            ),
+            GButton(
+              icon: Icons.map_outlined,
+              text: 'Discovery',
+            ),
+            GButton(
+              icon: Icons.rate_review,
+              text: 'Top Foodie',
+            ),
+            GButton(
+              icon: Icons.bookmark,
+              text: 'Bookmark',
+            ),
+            GButton(
+              icon: Icons.person,
+              text: 'Account',
+            ),
+          ],
+          selectedIndex:
+              _currentIndex, // Thêm dòng này để đồng bộ giá trị _currentIndex với tab được chọn
+          onTabChange: (index) {
+            _onTabSelected(
+                index); // Gọi phương thức _onTabSelected khi tab được chọn
+          },
+        ),
       ),
     );
   }

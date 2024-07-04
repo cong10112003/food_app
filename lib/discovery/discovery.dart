@@ -10,6 +10,10 @@ class Discovery extends StatefulWidget {
 class _DiscoveryState extends State<Discovery> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+    body: Center(
+      child: Text('Discovery'),
+    )
+    );
   }
 }

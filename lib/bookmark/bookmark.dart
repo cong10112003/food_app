@@ -10,6 +10,10 @@ class Bookmark extends StatefulWidget {
 class _BookmarkState extends State<Bookmark> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+    body: Center(
+      child: Text('Bookmark'),
+    )
+    );
   }
 }

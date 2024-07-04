@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/common%20widget/line_textfield.dart';
+import 'package:food_app/common%20widget/selection_text_view.dart';
+import 'package:food_app/common/color_extension.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -78,6 +81,113 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: TColor.bg,
+        body:
+            // isSelectCity
+            //     ?
+            NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    SliverAppBar(
+                      backgroundColor: Colors.white,
+                      elevation: 0,
+                      pinned: true,
+                      floating: false,
+                      centerTitle: false,
+                      // leading: IconButton(
+                      //   icon: Image.asset(
+                      //     "assets/img/back.png",
+                      //     width: 24,
+                      //     height: 30,
+                      //   ),
+                      //   onPressed: () {
+                      //     setState(() {
+                      //       isSelectCity = false;
+                      //     });
+                      //   },
+                      // ),
+                      leading: SizedBox(),
+                      leadingWidth: 0,
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "New York City",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: TColor.text,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            "Your location",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                color: TColor.gray,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        IconButton(
+                          icon: Image.asset(
+                            "assets/img/notification.png",
+                            width: 24,
+                            height: 30,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isSelectCity = false;
+                            });
+                          },
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            "assets/img/add.png",
+                            width: 24,
+                            height: 30,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isSelectCity = false;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    SliverAppBar(
+                      backgroundColor: Colors.white,
+                      elevation: 1,
+                      pinned: false,
+                      floating: true,
+                      primary: false,
+                      leading: SizedBox(),
+                      leadingWidth: 0,
+                      title: RoundTextField(
+                        controller: txtSearch,
+                        hitText: "Search for restaurants…",
+                        leftIcon: Icon(Icons.search, color: TColor.gray),
+                      ),
+                    ),
+                  ];
+                },
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //TODO: Legendary food
+                      SelectionTextView(
+                        title: "Legendary food",
+                        onSeeAllTap: () {},
+                      ),
+
+                      //TODO: Trending this week
+                      
+                    ],
+                  ),
+                ))
+    );
   }
 }

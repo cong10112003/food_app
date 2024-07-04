@@ -10,6 +10,10 @@ class TopFoodie extends StatefulWidget {
 class _TopFoodieState extends State<TopFoodie> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+    body: Center(
+      child: Text('Top foddie'),
+    )
+    );
   }
 }
