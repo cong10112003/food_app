@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/common%20widget/line_textfield.dart';
-import 'package:food_app/common%20widget/selection_text_view.dart';
+import 'package:food_app/common_widget/collection_food_item_cell.dart';
+import 'package:food_app/common_widget/food_item_cell.dart';
+import 'package:food_app/common_widget/line_textfield.dart';
+import 'package:food_app/common_widget/popular_food_item_cell.dart';
+import 'package:food_app/common_widget/selection_text_view.dart';
 import 'package:food_app/common/color_extension.dart';
+import 'package:food_app/home/outlet_list_view.dart';
+import 'package:food_app/restaurant/restaurant_detail_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -82,7 +87,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: TColor.bg,
+        backgroundColor: TColor.bg,
         body:
             // isSelectCity
             //     ?
@@ -182,12 +187,121 @@ class _HomeViewState extends State<HomeView> {
                         title: "Legendary food",
                         onSeeAllTap: () {},
                       ),
+                      SizedBox(
+                        height: media.width * 0.6,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            itemCount: legendaryArr.length,
+                            itemBuilder: (context, index) {
+                              var fObj = legendaryArr[index] as Map? ?? {};
 
-                      //TODO: Trending this week
-                      
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RestaurantDetailView(
+                                                fObj: fObj,
+                                              )));
+                                },
+                                child: FoodItemCell(
+                                  fObj: fObj,
+                                ),
+                              );
+                            }),
+                      ),
+                      //TODO: Treding 
+                      SelectionTextView(
+                        title: "Trending this week",
+                        onSeeAllTap: () {},
+                      ),
+                      SizedBox(
+                        height: media.width * 0.6,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            itemCount: legendaryArr.length,
+                            itemBuilder: (context, index) {
+                              var fObj = trendingArr[index] as Map? ?? {};
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RestaurantDetailView(
+                                                fObj: fObj,
+                                              )));
+                                },
+                                child: FoodItemCell(
+                                  fObj: fObj,
+                                ),
+                              );
+                            }),
+                      ),
+                      //TODO: Collection
+                      SelectionTextView(
+                        title: "Trending this week",
+                        onSeeAllTap: () {},
+                      ),
+                      SizedBox(
+                        height: media.width * 0.6,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            itemCount: trendingArr.length,
+                            itemBuilder: (context, index) {
+                              var fObj = collectionsArr[index] as Map? ?? {};
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RestaurantDetailView(
+                                                fObj: fObj,
+                                              )));
+                                },
+                                child: CollectionFoodItemCell(
+                                  fObj: fObj,
+                                ),
+                              );
+                            }),
+                      ),
+                      //TODO: Popular brands
+                      SelectionTextView(
+                        title: "Popular branch",
+                        onSeeAllTap: () {},
+                      ),
+                      SizedBox(
+                        height: media.width * 0.6,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            itemCount: popularArr.length,
+                            itemBuilder: (context, index) {
+                              var fObj = popularArr[index] as Map? ?? {};
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            OutletListView(fObj: fObj)),
+                                  );
+                                },
+                                child: PopularFoodItemCell(
+                                  fObj: fObj,
+                                  index: index,
+                                ),
+                              );
+                            }),
+                      ),
+
                     ],
                   ),
-                ))
-    );
+                )));
   }
 }
