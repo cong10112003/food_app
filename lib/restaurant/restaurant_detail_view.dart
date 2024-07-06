@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:cool_alert/cool_alert.dart';
+import 'package:floating_snackbar/floating_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:food_app/cart/cart.dart';
 import 'package:food_app/common_widget/collection_food_item_cell.dart';
 import 'package:food_app/common_widget/food_item_cell.dart';
 import 'package:food_app/common_widget/icon_text_button.dart';
@@ -58,7 +61,6 @@ class _RestaurantDetailViewState extends State<RestaurantDetailView> {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: NestedScrollView(
@@ -228,9 +230,110 @@ class _RestaurantDetailViewState extends State<RestaurantDetailView> {
                                   ],
                                 ),
                               ),
+                              //Order now
+                              Column(
+                                children: [
+                                  FilledButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Container(
+                                            height: 250,
+                                            padding: EdgeInsets.all(16.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Center(
+                                                  child: Text(
+                                                    'Your Cart',
+                                                    style: TextStyle(
+                                                      fontSize: 24.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(height: 16.0),
+                                                Text(
+                                                  'This is a modal bottom sheet. You can add any content here.',
+                                                  style: TextStyle(
+                                                    fontSize: 16.0,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 16.0),
+                                                Center(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 10),
+                                                    child: Center(
+                                                      child: FilledButton(
+                                                        style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color?>(
+                                                                      TColor
+                                                                          .primary),
+                                                          minimumSize:
+                                                              MaterialStateProperty
+                                                                  .all<Size>(Size(
+                                                                      double
+                                                                          .infinity,
+                                                                      50)),
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const Cart()));
+                                                        },
+                                                        child: Text("Checkout"),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Text("Order Now"),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color?>(
+                                              TColor.primary),
+                                    ),
+                                  ),
+                                  // Add to cart
+                                  FilledButton(
+                                    onPressed: () {
+                                      CoolAlert.show(
+                                        confirmBtnColor: TColor.primary,
+                                        backgroundColor: TColor.alertBackColor,
+                                        context: context,
+                                        type: CoolAlertType.success,
+                                        text: "Your item added",
+                                      );
+                                    },
+                                    child: Text("Add to cart"),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color?>(
+                                              TColor.orderColor),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -240,8 +343,7 @@ class _RestaurantDetailViewState extends State<RestaurantDetailView> {
                 //   height: 15,
                 // ),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric( horizontal: 15),
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
                   child: Divider(
                     height: 20, // Chiều cao của Divider
                     thickness: 4, // Độ dày của Divider

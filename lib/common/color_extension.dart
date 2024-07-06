@@ -4,6 +4,9 @@ class TColor {
   static Color get primary => const Color(0xff20D994);
   static Color get primaryText => const Color(0xffffffff);
 
+  static Color get alertBackColor => const Color.fromRGBO(156, 219, 166, 1);
+  static Color get orderColor => const Color.fromRGBO(253, 155, 99, 1);
+
   static Color get secondary => const Color(0xff173143);
   static Color get text => secondary;
 
@@ -24,7 +27,7 @@ class TColor {
         const Color(0xff4F2E19),
         const Color(0xff794C2F),
         const Color(0xff933017),
-         const Color(0xff435124),
+        const Color(0xff435124),
         const Color(0xff523B13),
         const Color(0xff322216)
       ];
