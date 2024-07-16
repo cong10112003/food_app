@@ -264,7 +264,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     //TODO: Legendary food
                     SelectionTextView(
-                      title: "Legendary food",
+                      title: "Food & Drink",
                       onSeeAllTap: () {},
                     ),
                     SizedBox(

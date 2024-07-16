@@ -19,3 +19,7 @@ Future<List<dynamic>> getItems() async {
 Future<List<dynamic>> getRestaurants() async {
   return await fetchData('NhaHangs/Get');
 }
+
+Future<List<dynamic>> getAccounts() async {
+  return await fetchData('TaiKhoans/Get');
+}

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../common/color_extension.dart';
 
 class DiscoveryCell extends StatelessWidget {
-  final Map fObj;
-  const DiscoveryCell({super.key, required this.fObj});
+  final Map item;
+  const DiscoveryCell({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class DiscoveryCell extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            fObj["image"].toString(),
+          Image.network(
+            item['image'].toString() ?? "",
             width: media.width * 0.15,
             height: media.width * 0.15,
             fit: BoxFit.fitWidth,
@@ -32,13 +32,13 @@ class DiscoveryCell extends StatelessWidget {
             height: media.width * 0.04,
           ),
           Text(
-            fObj["name"].toString(),
+            item["TenNH"].toString() ?? "",
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: TColor.text, fontSize: 16, fontWeight: FontWeight.w700),
           ),
           Text(
-            "${ fObj["place"].toString() } Place",
+            item['DiaChi'].toString() ?? "",
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: TColor.gray, fontSize: 12, fontWeight: FontWeight.w700),

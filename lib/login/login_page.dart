@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/api/api_urls.dart';
 import 'package:food_app/api/test_view_api.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/home/home_view.dart';
 import 'package:food_app/login/forgot_password.dart';
+import 'package:food_app/navigation_controller/admin_bottom-navigation.dart';
 import 'package:food_app/navigation_controller/bottom_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +18,45 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
+
+  Future<void> handleLogin() async {
+    final accounts = await getAccounts();
+    final email = txtEmail.text;
+    final password = txtPassword.text;
+
+    final account = accounts.firstWhere(
+      (account) =>
+          account['username'] == email && account['password'] == password,
+      orElse: () => null,
+    );
+
+    if (account != null) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', true);
+      prefs.setInt('userId', account['idTK']); //Lưu id
+      prefs.setString('userName', account['fullname']);
+      prefs.setString('phoneNumber', account['SDT']);
+      if (account['idTK'] == 1) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => bottom_navigation_controller()),
+          (Route<dynamic> route) => false,
+        );
+      } else if (account['idTK'] == 0) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => AdminBottomNavigation()),
+          (Route<dynamic> route) => false,
+        );
+      }
+    } else {
+      // Handle login failure (e.g., show an error message)
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid email or password')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextField(
                   controller: txtEmail,
-                  obscureText: true,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -127,11 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const bottom_navigation_controller()));
+                      handleLogin();
                     },
                   ),
                 ),
@@ -150,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.w700),
                     ),
                     TextButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       // onPressed: () async {
                       //   final result = await Navigator.push(
                       //       context,

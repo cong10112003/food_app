@@ -3,6 +3,8 @@ import 'package:food_app/account/my_level_view.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/common_widget/icon_text_button.dart';
 import 'package:food_app/common_widget/menu_row.dart';
+import 'package:food_app/login/login_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
   const Account({super.key});
@@ -12,6 +14,35 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  String _userName = "";
+  String _phoneNumber = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUser();
+  }
+
+  //Load user information
+  Future<void> _loadUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefs.getString('userName') ?? "Guest";
+      _phoneNumber = prefs.getString('phoneNumber') ?? "None phone number";
+    });
+  }
+
+  //Logout
+  Future<void> _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+      (Route<dynamic> route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -62,7 +93,7 @@ class _AccountState extends State<Account> {
                       height: media.width * 0.04,
                     ),
                     Text(
-                      "Lilja Peltola",
+                      _userName,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: TColor.text,
@@ -73,7 +104,7 @@ class _AccountState extends State<Account> {
                       height: media.width * 0.025,
                     ),
                     Text(
-                      "New York City",
+                      _phoneNumber,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: TColor.gray,
@@ -98,15 +129,13 @@ class _AccountState extends State<Account> {
                     icon: "assets/img/network.png",
                     title: "Network",
                     subTitle: "603",
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                   IconTextButton(
                     icon: "assets/img/review.png",
                     title: "My Reviews",
                     subTitle: "953",
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                   IconTextButton(
                     icon: "assets/img/my_level.png",
@@ -160,7 +189,9 @@ class _AccountState extends State<Account> {
                   MenuRow(
                     icon: "assets/img/sign_out.png",
                     title: "Sign Out",
-                    onPressed: () {},
+                    onPressed: () {
+                      _logout();
+                    },
                   ),
                   const Divider(
                     color: Colors.black26,

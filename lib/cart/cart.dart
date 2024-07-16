@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/common/color_extension.dart';
+import 'package:food_app/common_widget/direct_button.dart';
 import 'package:food_app/payment/online_paymanet.dart';
 
 class Cart extends StatefulWidget {
@@ -9,20 +11,46 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  void checkout(){}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FilledButton(
-          child: Text("Checkout now"),
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const OnlinePaymanet()));
-          },
-        ),
-      ),
-    );
+        body: Column(
+      children: [
+        Expanded(
+            child: Container(
+          child: Text("Danh sách cart"), // Thay text bằng dánh sách cart
+        )),
+        Container(
+          color: TColor.orderColor,
+          padding: const EdgeInsets.all(25),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Total: ",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                  Text(
+                    "2.000.000 VNĐ",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  )
+                ],
+              ),
+              SizedBox(height: 10,),
+              DirectButton(text: "Checkout", onTap: checkout)
+            ],
+          ),
+        )
+      ],
+    ));
   }
 }

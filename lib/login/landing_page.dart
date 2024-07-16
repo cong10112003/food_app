@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/login/check_status_account.dart';
 import 'package:food_app/login/login_page.dart';
 
 class LandingPage extends StatefulWidget {
@@ -111,7 +112,7 @@ class _LandingPageState extends State<LandingPage> {
                     child: Text('Login'),
                     onPressed: () {
                   
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage() ) );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const CheckStatusAccount() ) );
                   
                     },
                   ),
