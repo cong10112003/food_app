@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import '../common/color_extension.dart';
 
 class FoodItemCell extends StatelessWidget {
-  final Map fObj;
-  const FoodItemCell({super.key, required this.fObj});
+  final Map item;
+  const FoodItemCell({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
+    String imageUrl =
+        item['image'] ?? ""; // Lấy URL hình ảnh hoặc chuỗi rỗng nếu không có
+    bool isValidImageUrl = Uri.tryParse(imageUrl ?? "")?.isAbsolute ?? false;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       width: media.width * 0.4,
@@ -27,14 +30,19 @@ class FoodItemCell extends StatelessWidget {
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(5), topRight: Radius.circular(5)),
             child: Container(
-              color: TColor.secondary,
-              width: media.width * 0.4,
-              height: media.width * 0.3,
-              child: Image.asset(
-                fObj["image"].toString(),
-                fit: BoxFit.cover,
-              ),
-            ),
+                color: TColor.secondary,
+                width: media.width * 0.4,
+                height: media.width * 0.3,
+                child: isValidImageUrl
+                    ? Image.network(
+                        item['image'] ?? "",
+                        fit: BoxFit.cover,
+                      )
+                    : Icon(
+                        Icons.image,
+                        color: Colors.grey[600],
+                        size: media.width * 0.3,
+                      )),
           ),
           SizedBox(
             height: 10,
@@ -44,7 +52,7 @@ class FoodItemCell extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                fObj["name"].toString(),
+                item["tenSP"].toString() ?? "",
                 maxLines: 1,
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -56,7 +64,7 @@ class FoodItemCell extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                fObj["address"].toString(),
+                item["ChiTiet"].toString() ?? "",
                 maxLines: 1,
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -68,7 +76,7 @@ class FoodItemCell extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                fObj["category"].toString(),
+                item["category"] ?? "error",
                 maxLines: 1,
                 textAlign: TextAlign.left,
                 style: TextStyle(

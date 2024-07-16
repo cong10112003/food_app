@@ -51,6 +51,12 @@ dependencies:
   loading_indicator: ^3.1.1
   floating_snackbar: ^1.0.5
   cool_alert: ^2.0.1
+  flutter_credit_card: ^4.0.1
+  dio: ^5.5.0+1
+  provider: ^6.1.2
+  http: ^1.2.1
+  intl: ^0.19.0
+
 
 dev_dependencies:
   flutter_test:

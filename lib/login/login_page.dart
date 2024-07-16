@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/api/test_view_api.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/home/home_view.dart';
 import 'package:food_app/login/forgot_password.dart';
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                 ),
                 Text(
-                  "Welcome to\nCapi Restaurant",
+                  "Welcome to\nLunary",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: TColor.text,

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../common/color_extension.dart';
 
 class CollectionFoodItemCell extends StatelessWidget {
-  final Map fObj;
+  final Map item;
   final bool isGrid;
-  const CollectionFoodItemCell({super.key, required this.fObj, this.isGrid = false});
+  const CollectionFoodItemCell({super.key, required this.item, this.isGrid = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ class CollectionFoodItemCell extends StatelessWidget {
               color: TColor.secondary,
               width: double.maxFinite,
               height: double.maxFinite,
-              child: Image.asset(
-                fObj["image"].toString(),
+              child: Image.network(
+                item['image'] ?? "",
                 fit: BoxFit.cover,
               ),
             ),
@@ -63,24 +63,12 @@ class CollectionFoodItemCell extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    fObj["name"].toString(),
+                    item['TenNH'].toString() ?? "",
                     maxLines: 1,
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  Text(
-                    "${fObj["place"].toString()} Place",
-                    maxLines: 1,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
                         fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/api/api_urls.dart';
 import 'package:food_app/cart/cart.dart';
-import 'package:food_app/common_widget/collection_food_item_cell.dart';
 import 'package:food_app/common_widget/food_item_cell.dart';
 import 'package:food_app/common_widget/line_textfield.dart';
 import 'package:food_app/common_widget/popular_food_item_cell.dart';
 import 'package:food_app/common_widget/selection_text_view.dart';
 import 'package:food_app/common/color_extension.dart';
+import 'package:food_app/home/collection_food_item_cell.dart';
 import 'package:food_app/home/outlet_list_view.dart';
-import 'package:food_app/restaurant/restaurant_detail_view.dart';
+import 'package:food_app/food_detail/food_item_detail_view.dart';
+import 'package:food_app/restaurant_detail/restaurant_detail_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -22,22 +24,25 @@ class _HomeViewState extends State<HomeView> {
 
   List legendaryArr = [
     {
-      "name": "Lombar Pizza",
-      "address": "East 46th Street",
+      "name": "Lombor Pizza",
+      "address": "East 46th Streets",
       "category": "Pizza, Italian",
-      "image": "assets/img/l1.png"
+      "image": "assets/img/l1.png",
+      "price": "200000"
     },
     {
       "name": "Sushi Bar",
       "address": "210 Salt Pond Rd.",
       "category": "Sushi, Japan",
-      "image": "assets/img/l2.png"
+      "image": "assets/img/l2.png",
+      "price": "400000"
     },
     {
       "name": "Steak House",
       "address": "East 46th Street",
       "category": "Steak, American",
-      "image": "assets/img/l3.png"
+      "image": "assets/img/l3.png",
+      "price": "300000"
     }
   ];
   List trendingArr = [
@@ -45,36 +50,43 @@ class _HomeViewState extends State<HomeView> {
       "name": "Seafood Lee",
       "address": "210 Salt Pond Rd.",
       "category": "Seafood, Spain",
-      "image": "assets/img/t1.png"
+      "image": "assets/img/t1.png",
+      "price": "100000"
     },
     {
       "name": "Egg Tomato",
       "address": "East 46th Street",
       "category": "Egg, Italian",
-      "image": "assets/img/t2.png"
+      "image": "assets/img/t2.png",
+      "price": "200000"
     },
     {
       "name": "Burger Hot",
       "address": "East 46th Street",
       "category": "Pizza, Italian",
-      "image": "assets/img/t3.png"
+      "image": "assets/img/t3.png",
+      "price": "50000"
     }
   ];
   List collectionsArr = [
-    {"name": "Legendary food", "place": "34", "image": "assets/img/c1.png"},
-    {"name": "Seafood", "place": "28", "image": "assets/img/c2.png"},
-    {"name": "Fizza Meli", "place": "56", "image": "assets/img/c3.png"}
-  ];
-
-  List favoriteArr = [
-    {"name": "American", "image": "assets/img/f1.png"},
-    {"name": "France", "image": "assets/img/f2.png"},
-    {"name": "Japan", "image": "assets/img/f3.png"},
-    {"name": "health", "image": "assets/img/f4.png"},
-    {"name": "American1", "image": "assets/img/f1.png"},
-    {"name": "France1", "image": "assets/img/f2.png"},
-    {"name": "Japan1", "image": "assets/img/f3.png"},
-    {"name": "health1", "image": "assets/img/f4.png"}
+    {
+      "name": "Legendary food",
+      "place": "34",
+      "image": "assets/img/c1.png",
+      "price": "10000"
+    },
+    {
+      "name": "Seafood",
+      "place": "28",
+      "image": "assets/img/c2.png",
+      "price": "10000"
+    },
+    {
+      "name": "Fizza Meli",
+      "place": "56",
+      "image": "assets/img/c3.png",
+      "price": "10000"
+    }
   ];
 
   List popularArr = [
@@ -83,6 +95,14 @@ class _HomeViewState extends State<HomeView> {
     {"outlets": "31", "image": "assets/img/logo3.png"},
     {"outlets": "60", "image": "assets/img/logo4.png"}
   ];
+  //
+  // ItemListViewModel itemListViewModel = ItemListViewModel();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // itemListViewModel.fetchFoodList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +139,7 @@ class _HomeViewState extends State<HomeView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "New York City",
+                          "Ho Chi Minh City",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: TColor.text,
@@ -127,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          "Your location",
+                          "828 Su Van Hanh, District 10",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: TColor.gray,
@@ -184,6 +204,64 @@ class _HomeViewState extends State<HomeView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //TODO: Trending
+                    SelectionTextView(
+                      title: "Trending this week",
+                      onSeeAllTap: () {},
+                    ),
+                    SizedBox(
+                      height: media.width * 0.6,
+                      child: FutureBuilder<List<dynamic>>(
+                        future: getItems(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Lỗi: ${snapshot.error}'));
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return Center(child: Text('Không có món ăn nào'));
+                          } else {
+                            final items = snapshot.data!
+                                .where((item) =>
+                                    item is Map &&
+                                    item['Rate'] != null &&
+                                    item['Rate'] is double &&
+                                    item['Rate'] > 4.5)
+                                .toList();
+                            if (items.isEmpty) {
+                              return Center(
+                                  child: Text(
+                                      'Không có món ăn nào có Rate > 4.5'));
+                            }
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  var item = items[index] as Map? ?? {};
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FoodItemDetailView(
+                                                    item: item,
+                                                  )));
+                                    },
+                                    child: FoodItemCell(
+                                      item: item,
+                                    ),
+                                  );
+                                });
+                          }
+                        },
+                      ),
+                    ),
                     //TODO: Legendary food
                     SelectionTextView(
                       title: "Legendary food",
@@ -191,86 +269,92 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     SizedBox(
                       height: media.width * 0.6,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          itemCount: legendaryArr.length,
-                          itemBuilder: (context, index) {
-                            var fObj = legendaryArr[index] as Map? ?? {};
-
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RestaurantDetailView(
-                                              fObj: fObj,
-                                            )));
-                              },
-                              child: FoodItemCell(
-                                fObj: fObj,
-                              ),
-                            );
-                          }),
+                      child: FutureBuilder<List<dynamic>>(
+                        future: getItems(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Lỗi: ${snapshot.error}'));
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return Center(child: Text('Không có món ăn nào'));
+                          } else {
+                            final items = snapshot.data!;
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  var item = items[index] as Map? ?? {};
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FoodItemDetailView(
+                                                    item: item,
+                                                  )));
+                                    },
+                                    child: FoodItemCell(
+                                      item: item,
+                                    ),
+                                  );
+                                });
+                          }
+                        },
+                      ),
                     ),
-                    //TODO: Treding
+                    // //TODO: Collection
                     SelectionTextView(
-                      title: "Trending this week",
+                      title: "Restaurant",
                       onSeeAllTap: () {},
                     ),
                     SizedBox(
                       height: media.width * 0.6,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          itemCount: legendaryArr.length,
-                          itemBuilder: (context, index) {
-                            var fObj = trendingArr[index] as Map? ?? {};
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RestaurantDetailView(
-                                              fObj: fObj,
-                                            )));
-                              },
-                              child: FoodItemCell(
-                                fObj: fObj,
-                              ),
-                            );
-                          }),
-                    ),
-                    //TODO: Collection
-                    SelectionTextView(
-                      title: "Trending this week",
-                      onSeeAllTap: () {},
-                    ),
-                    SizedBox(
-                      height: media.width * 0.6,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          itemCount: trendingArr.length,
-                          itemBuilder: (context, index) {
-                            var fObj = collectionsArr[index] as Map? ?? {};
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RestaurantDetailView(
-                                              fObj: fObj,
-                                            )));
-                              },
-                              child: CollectionFoodItemCell(
-                                fObj: fObj,
-                              ),
-                            );
-                          }),
+                      child: FutureBuilder<List<dynamic>>(
+                        future: getRestaurants(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Lỗi: ${snapshot.error}'));
+                          } else if (!snapshot.hasData ||
+                              snapshot.data!.isEmpty) {
+                            return Center(child: Text('Không có nhà hàng nào'));
+                          } else {
+                            final items = snapshot.data!;
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  var item = items[index] as Map? ?? {};
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  RestaurantDetailView(
+                                                    item: item,
+                                                  )));
+                                    },
+                                    child: CollectionFoodItemCell(
+                                      item: item,
+                                    ),
+                                  );
+                                });
+                          }
+                        },
+                      ),
                     ),
                     //TODO: Popular brands
                     SelectionTextView(
@@ -309,7 +393,10 @@ class _HomeViewState extends State<HomeView> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => const Cart()));
         },
-        child: Icon(Icons.shopping_cart, color: Colors.black,),
+        child: Icon(
+          Icons.shopping_cart,
+          color: Colors.black,
+        ),
         backgroundColor: TColor.primary,
       ),
     );

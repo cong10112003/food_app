@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/account/account.dart';
-import 'package:food_app/bookmark/bookmark.dart';
+import 'package:food_app/news/news.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/discovery/discovery.dart';
 import 'package:food_app/home/home_view.dart';
@@ -57,7 +57,7 @@ class _bottom_navigation_controllerState
           HomeView(),
           Discovery(),
           TopFoodie(),
-          Bookmark(),
+          News(),
           Account()
         ],
       ),
@@ -85,7 +85,7 @@ class _bottom_navigation_controllerState
             ),
             GButton(
               icon: Icons.bookmark,
-              text: 'Bookmark',
+              text: 'News',
             ),
             GButton(
               icon: Icons.person,
