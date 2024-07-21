@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/common_widget/direct_button.dart';
-import 'package:food_app/payment/online_paymanet.dart';
+import 'package:food_app/payment/cart_payment.dart';
+import 'package:food_app/payment/option_payment.dart';
 
 class Cart extends StatefulWidget {
-  const Cart({super.key});
+  const Cart({Key? key}) : super(key: key);
 
   @override
   State<Cart> createState() => _CartState();
+  static List<Map<String, dynamic>> cartItems = [];
 }
 
 class _CartState extends State<Cart> {
-  void checkout(){}
+  void checkout() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => OptionPayment()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +51,9 @@ class _CartState extends State<Cart> {
                   )
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               DirectButton(text: "Checkout", onTap: checkout)
             ],
           ),

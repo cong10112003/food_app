@@ -1,4 +1,3 @@
-
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/cart/cart.dart';
@@ -13,14 +12,16 @@ import '../../common/color_extension.dart';
 
 class FoodItemDetailView extends StatefulWidget {
   final Map item;
-  const FoodItemDetailView({super.key, required this.item});
+  const FoodItemDetailView({
+    Key? key,
+    required this.item,
+  }) : super(key: key);
 
   @override
   State<FoodItemDetailView> createState() => _FoodItemDetailViewState();
 }
 
 class _FoodItemDetailViewState extends State<FoodItemDetailView> {
-
   List collectionsArr = [
     {"name": "Legendary food", "place": "34", "image": "assets/img/c1.png"},
     {"name": "Seafood", "place": "28", "image": "assets/img/c2.png"},
@@ -44,6 +45,45 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
     setState(() {
       quantityCount++;
     });
+  }
+
+  //Show alert successfully add to cart
+  void showSuccessAlert() {
+    CoolAlert.show(
+        confirmBtnColor: TColor.primary,
+        backgroundColor: TColor.alertBackColor,
+        context: context,
+        type: CoolAlertType.success,
+        text: "Your item added");
+  }
+
+  //
+  List<Map<String, dynamic>> cartItems = [];
+  // Phương thức thêm sản phẩm vào giỏ hàng
+  void addToCart(Map item) {
+    bool found = false;
+
+    // Duyệt qua các sản phẩm trong giỏ hàng
+    for (int i = 0; i < cartItems.length; i++) {
+      if (cartItems[i]["tenSP"] == item["tenSP"]) {
+        // Nếu tên sản phẩm đã tồn tại trong giỏ hàng, cập nhật số lượng
+        cartItems[i]["quantity"] += 1;
+        found = true;
+        break;
+      }
+    }
+
+    // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào với số lượng là 1
+    if (!found) {
+      cartItems.add({
+        "tenSP": item["tenSP"],
+        "GiaTien": item["GiaTien"],
+        "quantity": 1,
+      });
+    }
+
+    // Hiển thị thông báo thành công khi thêm sản phẩm vào giỏ hàng
+    showSuccessAlert();
   }
 
   @override
@@ -362,13 +402,9 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
                                         height: 50,
                                         child: FilledButton(
                                           onPressed: () {
-                                            CoolAlert.show(
-                                                confirmBtnColor: TColor.primary,
-                                                backgroundColor:
-                                                    TColor.alertBackColor,
-                                                context: context,
-                                                type: CoolAlertType.success,
-                                                text: "Your item added");
+                                            setState(() {
+                                              addToCart(widget.item);
+                                            });
                                           },
                                           child: Text("Add to cart"),
                                           style: ButtonStyle(

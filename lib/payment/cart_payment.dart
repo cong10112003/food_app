@@ -4,14 +4,14 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/delivery/delivery.dart';
 
-class OnlinePaymanet extends StatefulWidget {
-  const OnlinePaymanet({super.key});
+class CartPaymanet extends StatefulWidget {
+  const CartPaymanet({super.key});
 
   @override
-  State<OnlinePaymanet> createState() => _OnlinePaymanetState();
+  State<CartPaymanet> createState() => _CartPaymanetState();
 }
 
-class _OnlinePaymanetState extends State<OnlinePaymanet> {
+class _CartPaymanetState extends State<CartPaymanet> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   String cardNumber = '';
   String expiryDate = '';

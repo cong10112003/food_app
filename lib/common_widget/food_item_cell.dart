@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 import '../common/color_extension.dart';
@@ -9,9 +12,43 @@ class FoodItemCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
-    String imageUrl =
-        item['image'] ?? ""; // Lấy URL hình ảnh hoặc chuỗi rỗng nếu không có
-    bool isValidImageUrl = Uri.tryParse(imageUrl ?? "")?.isAbsolute ?? false;
+    String imageString = item['image'] ?? "";
+    bool isValidImageUrl = Uri.tryParse(imageString)?.isAbsolute ?? false;
+
+    Uint8List? _base64ToUint8List(String base64String) {
+      try {
+        return base64Decode(base64String);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    Widget _buildImage() {
+      if (isValidImageUrl) {
+        return Image.network(
+          imageString,
+          fit: BoxFit.cover,
+          width: media.width * 0.4,
+          height: media.width * 0.3,
+        );
+      } else {
+        Uint8List? imageBytes = _base64ToUint8List(imageString);
+        if (imageBytes != null) {
+          return Image.memory(
+            imageBytes,
+            fit: BoxFit.cover,
+            width: media.width * 0.4,
+            height: media.width * 0.3,
+          );
+        } else {
+          return Icon(
+            Icons.image,
+            color: Colors.grey[600],
+            size: media.width * 0.3,
+          );
+        }
+      }
+    }
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       width: media.width * 0.4,
@@ -33,16 +70,8 @@ class FoodItemCell extends StatelessWidget {
                 color: TColor.secondary,
                 width: media.width * 0.4,
                 height: media.width * 0.3,
-                child: isValidImageUrl
-                    ? Image.network(
-                        item['image'] ?? "",
-                        fit: BoxFit.cover,
-                      )
-                    : Icon(
-                        Icons.image,
-                        color: Colors.grey[600],
-                        size: media.width * 0.3,
-                      )),
+                child: _buildImage(),
+          ),
           ),
           SizedBox(
             height: 10,

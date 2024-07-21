@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/api/api_urls.dart';
+import 'package:food_app/api/api_get.dart';
 import 'package:food_app/common/color_extension.dart';
 import 'package:food_app/discovery/discovery_cell.dart';
 
@@ -13,7 +13,6 @@ class Discovery extends StatefulWidget {
 class _DiscoveryState extends State<Discovery> {
   @override
   Widget build(BuildContext context) {
-    var media = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: TColor.bg,
       body: NestedScrollView(

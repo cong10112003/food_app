@@ -11,12 +11,10 @@ class bottom_navigation_controller extends StatefulWidget {
   const bottom_navigation_controller({super.key});
 
   @override
-  State<bottom_navigation_controller> createState() =>
-      _bottom_navigation_controllerState();
+  State<bottom_navigation_controller> createState() =>_bottom_navigation_controllerState();
 }
 
-class _bottom_navigation_controllerState
-    extends State<bottom_navigation_controller> {
+class _bottom_navigation_controllerState extends State<bottom_navigation_controller> {
   int _currentIndex = 0;
   late PageController _pageController;
 

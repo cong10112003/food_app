@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/api/api_urls.dart';
+import 'package:food_app/api/api_get.dart';
 
 class TestViewApi extends StatelessWidget {
   const TestViewApi({super.key});
