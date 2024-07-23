@@ -45,3 +45,17 @@ Future<void> postAccount(Map<String, dynamic> account) async {
     throw Exception('Failed to post product');
   }
 }
+Future<Map<String, dynamic>> postOtp(String email) async {
+  final response = await http.post(
+    Uri.parse('$FOOD_ITEM/TaiKhoans/postOTP').replace(queryParameters: {'email': email}),
+    headers: {'Content-Type': 'application/json'},
+  );
+
+  if (response.statusCode == 200) {
+    // Successful response
+    return json.decode(response.body);
+  } else {
+    // Error response
+    throw Exception('Failed to send OTP');
+  }
+}

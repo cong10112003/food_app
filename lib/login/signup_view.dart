@@ -24,24 +24,41 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController txtFullname = TextEditingController();
   void _submitForm() async {
     int maxId = await fetchMaxIdTk();
-    if (_formKey.currentState!.validate()){
+    if (_formKey.currentState!.validate()) {
       final account = {
-      'idTK': maxId + 1,
-      'username': txtEmail.text,
-      'password': txtPassword.text,
-      'SDT': int.parse(txtPhone.text),
-      'fullname': txtFullname.text,
-    };
+        'idTK': maxId + 1,
+        'username': txtEmail.text,
+        'password': txtPassword.text,
+        'SDT': int.parse(txtPhone.text),
+        'fullname': txtFullname.text,
+      };
+      try {
+        await postAccount(account);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Thêm thành công'),
+        ));
+        _sumbitOTP(txtEmail.text);
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Thêm thất bại'),
+        ));
+      }
+    }
+  }
+
+  void _sumbitOTP(String email) async {
+    String alert = txtEmail.text;
     try {
-      await postAccount(account);
+      final response = await postOtp(email);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Thêm thành công'),
+        content: Text('OTP đã được gửi: $alert'),
       ));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => OtpCheck()));
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Thêm thất bại'),
+        content: Text('Gửi OTP thất bại'),
       ));
-    }
     }
   }
 
@@ -148,13 +165,12 @@ class _SignUpViewState extends State<SignUpView> {
                       showToast('Mật khẩu nhập lại không khớp');
                       return;
                     }
-                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(txtEmail.text)) {
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                        .hasMatch(txtEmail.text)) {
                       showToast('Email không đúng định dạng');
                       return;
                     } else {
                       _submitForm();
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => OtpCheck()));
                     }
                   },
                   type: RoundButtonType.primary,

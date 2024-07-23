@@ -28,7 +28,7 @@ Future<List<dynamic>> getOTP() async {
   return await fetchData('TaiKhoans/getOTP');
 }
 
-
+//get MAX id tài khoản
 Future<int> fetchMaxIdTk() async {
   final response = await http.get(Uri.parse('$FOOD_ITEM/TaiKhoans/Get'));
   
@@ -38,6 +38,37 @@ Future<int> fetchMaxIdTk() async {
     return maxId;
   } else {
     throw Exception('Failed to load accounts');
+  }
+}
+//get email được tạo mới nhất
+Future<String> fetchNewestEmail() async {
+  final response = await http.get(Uri.parse('$FOOD_ITEM/TaiKhoans/Get'));
+  
+  if (response.statusCode == 200) {
+    final List<dynamic> accounts = json.decode(response.body);
+
+    if (accounts.isEmpty) {
+      throw Exception('No accounts found');
+    }
+
+    // Tìm idTK lớn nhất
+    final highestAccount = accounts.reduce((a, b) => a['idTK'] > b['idTK'] ? a : b);
+
+    // Trả về username của idTK lớn nhất
+    return highestAccount['username'];
+  } else {
+    throw Exception('Failed to load accounts');
+  }
+}
+//get OTP code
+Future<String> fetchOTP() async {
+  final response = await http.get(Uri.parse('$FOOD_ITEM/TaiKhoans/getOTP'));
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> data = json.decode(response.body);
+    return data['OTP'];
+  } else {
+    throw Exception('Failed to load OTP');
   }
 }
 
