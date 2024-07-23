@@ -1,7 +1,6 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:food_app/cart/cart.dart';
-import 'package:food_app/common_widget/collection_food_item_cell.dart';
 import 'package:food_app/common_widget/icon_text_button.dart';
 import 'package:food_app/common_widget/img_text_button.dart';
 import 'package:food_app/common_widget/selection_text_view.dart';
@@ -647,30 +646,7 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
                 //       }),
                 // ),
 
-                //TODO: Collections by Capi
-                SelectionTextView(
-                  title: "Collections by Capi",
-                  onSeeAllTap: () {},
-                ),
-
-                SizedBox(
-                  height: media.width * 0.6,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      itemCount: collectionsArr.length,
-                      itemBuilder: (context, index) {
-                        var fObj = collectionsArr[index] as Map? ?? {};
-
-                        return CollectionFoodItemCell(
-                          fObj: fObj,
-                        );
-                      }),
-                ),
-
-                const SizedBox(
-                  height: 15,
-                )
+                
               ],
             ),
           )),

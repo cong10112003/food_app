@@ -55,7 +55,7 @@ class _bottom_navigation_controllerState extends State<bottom_navigation_control
           HomeView(),
           Discovery(),
           TopFoodie(),
-          News(),
+          // News(),
           Account()
         ],
       ),
@@ -81,10 +81,10 @@ class _bottom_navigation_controllerState extends State<bottom_navigation_control
               icon: Icons.rate_review,
               text: 'Top Foodie',
             ),
-            GButton(
-              icon: Icons.bookmark,
-              text: 'News',
-            ),
+            // GButton(
+            //   icon: Icons.bookmark,
+            //   text: 'News',
+            // ),
             GButton(
               icon: Icons.person,
               text: 'Account',

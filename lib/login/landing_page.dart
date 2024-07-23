@@ -109,7 +109,7 @@ class _LandingPageState extends State<LandingPage> {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    child: Text('Login'),
+                    child: Text('Login',style: TextStyle(color: Colors.black),),
                     onPressed: () {
                   
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const CheckStatusAccount() ) );

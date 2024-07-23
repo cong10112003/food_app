@@ -31,3 +31,17 @@ Future<void> postRestaurant(Map<String, dynamic> product) async {
     throw Exception('Failed to post product');
   }
 }
+//account
+Future<void> postAccount(Map<String, dynamic> account) async {
+  final response = await http.post(
+    Uri.parse('$FOOD_ITEM/TaiKhoans/PostTaiKhoan'),
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode(account),
+  );
+
+  if (response.statusCode == 201 || response.statusCode == 200) {
+    print('Product posted successfully');
+  } else {
+    throw Exception('Failed to post product');
+  }
+}

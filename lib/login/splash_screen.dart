@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Text("Welcom to Lunary order")
+            Text("Lunary",style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),)
           ],
         ),
       ),

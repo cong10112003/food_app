@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:food_app/admin_manager/item_manager/main_item_manager.dart';
 import 'package:food_app/api/api_get.dart';
 import 'package:food_app/api/test_view_api.dart';
 import 'package:food_app/common/color_extension.dart';
+import 'package:food_app/common/toast.dart';
 import 'package:food_app/home/home_view.dart';
 import 'package:food_app/login/forgot_password.dart';
+import 'package:food_app/login/signup_view.dart';
 import 'package:food_app/navigation_controller/admin_bottom-navigation.dart';
 import 'package:food_app/navigation_controller/bottom_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +24,20 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController txtPassword = TextEditingController();
 
   Future<void> handleLogin() async {
+      if (txtEmail.text.isEmpty ||
+          txtPassword.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Vui lòng điền đầy đủ thông tin')),
+          );
+          return;
+          }
+      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+          .hasMatch(txtEmail.text)) {
+          ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Email không đúng định dạng')),
+          );
+          return;
+          }
     final accounts = await getAccounts();
     final email = txtEmail.text;
     final password = txtPassword.text;
@@ -37,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       prefs.setInt('userId', account['idTK']); //Lưu id
       prefs.setString('userName', account['fullname']);
       prefs.setString('phoneNumber', account['SDT']);
-      if (account['idTK'] == 1) {
+      if (account['idTK'] != 0) {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -54,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       // Handle login failure (e.g., show an error message)
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Invalid email or password')),
+        SnackBar(content: Text('Tên đăng nhập hoặc mật khẩu không đúng')),
       );
     }
   }
@@ -188,17 +205,12 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.w700),
                     ),
                     TextButton(
-                      onPressed: () {},
-                      // onPressed: () async {
-                      //   final result = await Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => const SignUpView()));
-                      //   if (result != null) {
-                      //     txtEmail.text = result[0];
-                      //     txtPassword.text = result[1];
-                      //   }
-                      // },
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpView()));
+                      },
                       child: Text(
                         "Signup",
                         textAlign: TextAlign.center,
