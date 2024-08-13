@@ -16,7 +16,7 @@ class _OutletListViewState extends State<OutletListView> {
 
   List outletArr = [
     {
-      "name": "Lombar Pizza",
+      "name": "Pizza",
       "address": "East 46th Street",
       "category": "Pizza, Italian",
       "image": "assets/img/l1.png",
@@ -24,7 +24,7 @@ class _OutletListViewState extends State<OutletListView> {
       "rate": 4.8
     },
     {
-      "name": "Sushi Bar",
+      "name": "Sushi miếng",
       "address": "210 Salt Pond Rd.",
       "category": "Sushi, Japan",
       "image": "assets/img/l2.png",
@@ -32,7 +32,7 @@ class _OutletListViewState extends State<OutletListView> {
       "rate": 3.8
     },
     {
-      "name": "Steak House",
+      "name": "Ngôi nhà thịt nướng",
       "address": "East 46th Street",
       "category": "Steak, American",
       "image": "assets/img/l3.png",
@@ -40,7 +40,7 @@ class _OutletListViewState extends State<OutletListView> {
       "rate": 2.8
     },
     {
-      "name": "Seafood Lee",
+      "name": "Hải sản Lee",
       "address": "210 Salt Pond Rd.",
       "category": "Seafood, Spain",
       "image": "assets/img/t1.png",
@@ -48,7 +48,7 @@ class _OutletListViewState extends State<OutletListView> {
       "rate": 5.0
     },
     {
-      "name": "Egg Tomato",
+      "name": "Trứng Tomato",
       "address": "East 46th Street",
       "category": "Egg, Italian",
       "image": "assets/img/t2.png",
@@ -56,7 +56,7 @@ class _OutletListViewState extends State<OutletListView> {
       "rate": 4.8
     },
     {
-      "name": "Burger Hot",
+      "name": "Burger nóng hổi",
       "address": "East 46th Street",
       "category": "Pizza, Italian",
       "image": "assets/img/t3.png",
@@ -112,7 +112,7 @@ class _OutletListViewState extends State<OutletListView> {
                 TextButton(
                     onPressed: () {},
                     child: const Text(
-                      "Share",
+                      "Chia sẻ",
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           color: Colors.white,
@@ -142,7 +142,7 @@ class _OutletListViewState extends State<OutletListView> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
-                      "${ widget.fObj["outlets"] } Outlets",
+                      "${ widget.fObj["Thương hiệu"] } Outlets",
                       style: TextStyle(
                           color: TColor.text,
                           fontSize: 16,
@@ -158,7 +158,7 @@ class _OutletListViewState extends State<OutletListView> {
                       
                     },
                     child: Text(
-                      "Filter",
+                      "Lọc",
                       style: TextStyle(
                           color: TColor.primary,
                           fontSize: 16,

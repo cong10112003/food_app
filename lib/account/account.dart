@@ -56,7 +56,7 @@ class _AccountState extends State<Account> {
           TextButton(
             onPressed: () {},
             child: Text(
-              "Edit",
+              "Sửa",
               style: TextStyle(
                   color: TColor.primary,
                   fontSize: 16,
@@ -127,20 +127,20 @@ class _AccountState extends State<Account> {
                 children: [
                   IconTextButton(
                     icon: "assets/img/network.png",
-                    title: "Network",
+                    title: "Hệ thống",
                     subTitle: "603",
                     onPressed: () {},
                   ),
                   IconTextButton(
                     icon: "assets/img/review.png",
-                    title: "My Reviews",
+                    title: "Reviews của tôi",
                     subTitle: "953",
                     onPressed: () {},
                   ),
                   IconTextButton(
                     icon: "assets/img/my_level.png",
-                    title: "My Level",
-                    subTitle: "Sliver",
+                    title: "Level của tôi",
+                    subTitle: "Bạc",
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -161,7 +161,7 @@ class _AccountState extends State<Account> {
                 children: [
                   MenuRow(
                     icon: "assets/img/payment.png",
-                    title: "Manage Payment Option",
+                    title: "Quản lý thanh toán",
                     onPressed: () {},
                   ),
                   const Divider(
@@ -170,7 +170,7 @@ class _AccountState extends State<Account> {
                   ),
                   MenuRow(
                     icon: "assets/img/find_friends.png",
-                    title: "Find Friends on Capi",
+                    title: "Bạn bè",
                     onPressed: () {},
                   ),
                   const Divider(
@@ -179,7 +179,7 @@ class _AccountState extends State<Account> {
                   ),
                   MenuRow(
                     icon: "assets/img/settings.png",
-                    title: "More Settings",
+                    title: "Cài đặt",
                     onPressed: () {},
                   ),
                   const Divider(
@@ -188,7 +188,7 @@ class _AccountState extends State<Account> {
                   ),
                   MenuRow(
                     icon: "assets/img/sign_out.png",
-                    title: "Sign Out",
+                    title: "Đăng xuất",
                     onPressed: () {
                       _logout();
                     },

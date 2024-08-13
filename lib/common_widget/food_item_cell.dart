@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../common/color_extension.dart';
 
@@ -11,6 +12,8 @@ class FoodItemCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NumberFormat currencyFormat =
+        NumberFormat.currency(locale: 'vi_VN', symbol: 'VNĐ');
     var media = MediaQuery.of(context).size;
     String imageString = item['image'] ?? "";
     bool isValidImageUrl = Uri.tryParse(imageString)?.isAbsolute ?? false;
@@ -49,6 +52,7 @@ class FoodItemCell extends StatelessWidget {
         }
       }
     }
+    
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       width: media.width * 0.4,
@@ -105,7 +109,7 @@ class FoodItemCell extends StatelessWidget {
                 height: 4,
               ),
               Text(
-                item["category"] ?? "error",
+                "${currencyFormat.format(item['GiaTien' ?? ""])}" ?? "error",
                 maxLines: 1,
                 textAlign: TextAlign.left,
                 style: TextStyle(

@@ -71,15 +71,15 @@ class _bottom_navigation_controllerState extends State<bottom_navigation_control
           tabs: const [
             GButton(
               icon: Icons.home,
-              text: 'Home',
+              text: 'Trang chủ',
             ),
             GButton(
               icon: Icons.map_outlined,
-              text: 'Discovery',
+              text: 'Nhà hàng',
             ),
             GButton(
               icon: Icons.rate_review,
-              text: 'Top Foodie',
+              text: 'Top người dùng',
             ),
             // GButton(
             //   icon: Icons.bookmark,
@@ -87,7 +87,7 @@ class _bottom_navigation_controllerState extends State<bottom_navigation_control
             // ),
             GButton(
               icon: Icons.person,
-              text: 'Account',
+              text: 'Tài khoản',
             ),
           ],
           selectedIndex:

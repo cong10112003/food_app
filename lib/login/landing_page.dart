@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/login/check_status_account.dart';
 import 'package:food_app/login/login_page.dart';
+import 'package:food_app/navigation_controller/bottom_navigation.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -16,25 +17,25 @@ class _LandingPageState extends State<LandingPage> {
 
   List infoArr = [
     {
-      "title": "Quick search",
+      "title": "Tìm kiếm nhanh",
       "sub_title":
-          "Set your location to start exploring\nrestaurants around you",
+          "Đặt vị trí của bạn để bắt đầu khám phá\nnhà hàng xung quanh bạn",
       "icon": "assets/img/1.png"
     },
     {
-      "title": "Search for a place",
+      "title": "Tìm món ăn",
       "sub_title":
-          "Set your location to start exploring\nrestaurants around you",
+          "Đặt vị trí của bạn để bắt đầu khám phá\nnhà hàng xung quanh bạn",
       "icon": "assets/img/2.png"
     },
     {
-      "title": "Variety of food",
+      "title": "Đồ ăn đa dạng",
       "sub_title":
-          "Set your location to start exploring\nrestaurants around you",
+          "Đặt vị trí của bạn để bắt đầu khám phá\nnhà hàng xung quanh bạn",
       "icon": "assets/img/3.png"
     },
     {
-      "title": "Fast shipping",
+      "title": "Giao hàng nhanh",
       "sub_title":
           "Set your location to start exploring\nrestaurants around you",
       "icon": "assets/img/4.png"
@@ -109,7 +110,7 @@ class _LandingPageState extends State<LandingPage> {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    child: Text('Login',style: TextStyle(color: Colors.black),),
+                    child: Text('Đăng nhập',style: TextStyle(color: Colors.black),),
                     onPressed: () {
                   
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const CheckStatusAccount() ) );

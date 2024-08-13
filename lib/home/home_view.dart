@@ -139,7 +139,7 @@ class _HomeViewState extends State<HomeView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Ho Chi Minh City",
+                          "Thành phố Hồ Chí Minh",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: TColor.text,
@@ -147,7 +147,7 @@ class _HomeViewState extends State<HomeView> {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          "828 Su Van Hanh, District 10",
+                          "828 Sư Vạn Hạnh, quận 10",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               color: TColor.gray,
@@ -194,7 +194,7 @@ class _HomeViewState extends State<HomeView> {
                     leadingWidth: 0,
                     title: RoundTextField(
                       controller: txtSearch,
-                      hitText: "Search for restaurants…",
+                      hitText: "Tìm kiếm món ăn...",
                       leftIcon: Icon(Icons.search, color: TColor.gray),
                     ),
                   ),
@@ -206,7 +206,7 @@ class _HomeViewState extends State<HomeView> {
                   children: [
                     //TODO: Trending
                     SelectionTextView(
-                      title: "Trending this week",
+                      title: "Nổi bật trong tuần này",
                       onSeeAllTap: () {},
                     ),
                     SizedBox(
@@ -264,7 +264,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     //TODO: Legendary food
                     SelectionTextView(
-                      title: "Food & Drink",
+                      title: "Thức ăn và nước uống",
                       onSeeAllTap: () {},
                     ),
                     SizedBox(
@@ -311,7 +311,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     // //TODO: Collection
                     SelectionTextView(
-                      title: "Restaurant",
+                      title: "Nhà hàng",
                       onSeeAllTap: () {},
                     ),
                     SizedBox(
@@ -358,7 +358,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     //TODO: Popular brands
                     SelectionTextView(
-                      title: "Popular branch",
+                      title: "Các thương hiệu phổ biến",
                       onSeeAllTap: () {},
                     ),
                     SizedBox(

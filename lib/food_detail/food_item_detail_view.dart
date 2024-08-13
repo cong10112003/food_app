@@ -21,14 +21,8 @@ class FoodItemDetailView extends StatefulWidget {
 }
 
 class _FoodItemDetailViewState extends State<FoodItemDetailView> {
-  List collectionsArr = [
-    {"name": "Legendary food", "place": "34", "image": "assets/img/c1.png"},
-    {"name": "Seafood", "place": "28", "image": "assets/img/c2.png"},
-    {"name": "Fizza Meli", "place": "56", "image": "assets/img/c3.png"}
-  ];
-
   // Quantity
-  int quantityCount = 0;
+  int quantityCount = 1;
 
   //minus quantity
   void minusQuantity() {
@@ -49,39 +43,22 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
   //Show alert successfully add to cart
   void showSuccessAlert() {
     CoolAlert.show(
+        title: "Thành công!!!",
         confirmBtnColor: TColor.primary,
         backgroundColor: TColor.alertBackColor,
         context: context,
         type: CoolAlertType.success,
-        text: "Your item added");
+        text: "Đã thêm vào giỏ hàng");
   }
 
-  //
-  List<Map<String, dynamic>> cartItems = [];
-  // Phương thức thêm sản phẩm vào giỏ hàng
-  void addToCart(Map item) {
-    bool found = false;
-
-    // Duyệt qua các sản phẩm trong giỏ hàng
-    for (int i = 0; i < cartItems.length; i++) {
-      if (cartItems[i]["tenSP"] == item["tenSP"]) {
-        // Nếu tên sản phẩm đã tồn tại trong giỏ hàng, cập nhật số lượng
-        cartItems[i]["quantity"] += 1;
-        found = true;
-        break;
-      }
-    }
-
-    // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào với số lượng là 1
-    if (!found) {
-      cartItems.add({
-        "tenSP": item["tenSP"],
-        "GiaTien": item["GiaTien"],
-        "quantity": 1,
+  void addToCart() {
+    setState(() {
+      Cart.cartItems.add({
+        'item': widget.item,
+        'quantity': quantityCount,
+        'price': widget.item['GiaTien' ?? ""] * quantityCount,
       });
-    }
-
-    // Hiển thị thông báo thành công khi thêm sản phẩm vào giỏ hàng
+    });
     showSuccessAlert();
   }
 
@@ -307,92 +284,6 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
                                   Column(
                                     children: [
                                       SizedBox(
-                                        width: double.infinity,
-                                        height: 50,
-                                        child: FilledButton(
-                                          onPressed: () {
-                                            showModalBottomSheet(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Container(
-                                                  height: 250,
-                                                  padding: EdgeInsets.all(16.0),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Center(
-                                                        child: Text(
-                                                          'Your Cart',
-                                                          style: TextStyle(
-                                                            fontSize: 24.0,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 16.0),
-                                                      Text(
-                                                        'This is a modal bottom sheet. You can add any content here.',
-                                                        style: TextStyle(
-                                                          fontSize: 16.0,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 16.0),
-                                                      Center(
-                                                        child: Padding(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      15,
-                                                                  vertical: 10),
-                                                          child: Center(
-                                                            child: FilledButton(
-                                                              style:
-                                                                  ButtonStyle(
-                                                                backgroundColor:
-                                                                    MaterialStateProperty.all<
-                                                                            Color?>(
-                                                                        TColor
-                                                                            .primary),
-                                                                minimumSize: MaterialStateProperty
-                                                                    .all<Size>(Size(
-                                                                        double
-                                                                            .infinity,
-                                                                        50)),
-                                                              ),
-                                                              onPressed: () {
-                                                                Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                const Cart()));
-                                                              },
-                                                              child: Text(
-                                                                  "Checkout"),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Text("Order Now"),
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color?>(TColor.primary),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
                                         height: 5,
                                       ),
                                       // Add to cart
@@ -401,11 +292,10 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
                                         height: 50,
                                         child: FilledButton(
                                           onPressed: () {
-                                            setState(() {
-                                              addToCart(widget.item);
-                                            });
+                                            //Xử lý dự kiện add sản phẩm và số lượng vào giỏ hàng
+                                            addToCart();
                                           },
-                                          child: Text("Add to cart"),
+                                          child: Text("Thêm vào giỏ hàng"),
                                           style: ButtonStyle(
                                             backgroundColor:
                                                 MaterialStateProperty.all<
@@ -425,12 +315,10 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
                 // const SizedBox(
                 //   height: 15,
                 // ),
-                Container(
-                  child: Divider(
-                    height: 10, // Chiều cao của Divider
-                    thickness: 4, // Độ dày của Divider
-                    color: TColor.primary, // Màu sắc của Divider
-                  ),
+                Divider(
+                  height: 10, // Chiều cao của Divider
+                  thickness: 4, // Độ dày của Divider
+                  color: TColor.primary, // Màu sắc của Divider
                 ),
                 Container(
                   margin:
@@ -645,8 +533,6 @@ class _FoodItemDetailViewState extends State<FoodItemDetailView> {
                 //         );
                 //       }),
                 // ),
-
-                
               ],
             ),
           )),

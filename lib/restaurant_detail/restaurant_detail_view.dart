@@ -6,7 +6,8 @@ import 'package:food_app/common_widget/selection_text_view.dart';
 
 class RestaurantDetailView extends StatefulWidget {
   final Map item;
-  const RestaurantDetailView({super.key, required this.item});
+  const RestaurantDetailView({
+    super.key, required this.item});
   
   @override
   State<RestaurantDetailView> createState() => _RestaurantDetailViewState();

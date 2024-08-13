@@ -10,6 +10,7 @@ import 'package:food_app/login/forgot_password.dart';
 import 'package:food_app/login/signup_view.dart';
 import 'package:food_app/navigation_controller/admin_bottom-navigation.dart';
 import 'package:food_app/navigation_controller/bottom_navigation.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,21 +24,26 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPassword = TextEditingController();
 
+  @override
+  void dispose() {
+    txtEmail.dispose();
+    txtPassword.dispose();
+    super.dispose();
+  }
+
   Future<void> handleLogin() async {
-      if (txtEmail.text.isEmpty ||
-          txtPassword.text.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Vui lòng điền đầy đủ thông tin')),
-          );
-          return;
-          }
-      if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-          .hasMatch(txtEmail.text)) {
-          ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Email không đúng định dạng')),
-          );
-          return;
-          }
+    if (txtEmail.text.isEmpty || txtPassword.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Vui lòng điền đầy đủ thông tin')),
+      );
+      return;
+    }
+    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(txtEmail.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Email không đúng định dạng')),
+      );
+      return;
+    }
     final accounts = await getAccounts();
     final email = txtEmail.text;
     final password = txtPassword.text;
@@ -92,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                 ),
                 Text(
-                  "Welcome to\nLunary",
+                  "Chào mừng đến\nLunary",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: TColor.text,
@@ -103,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 10,
                 ),
                 Text(
-                  "Sign in to continue",
+                  "Đăng nhập để tiếp tục",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: TColor.gray,
@@ -141,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: TColor.primary),
                     ),
-                    labelText: 'Password',
+                    labelText: 'Mật khẩu',
                     labelStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -156,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                                 builder: (context) => const ForgotPassword()));
                       },
                       child: Text(
-                        "Forgot Password?",
+                        "Quên mật khẩu ?",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: TColor.primary,
@@ -178,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                           MaterialStateProperty.all<Color?>(TColor.primary),
                     ),
                     child: Text(
-                      'Login',
+                      'Đăng nhập',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
@@ -197,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "New to Capi Restaurant?",
+                      "Người mới?",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: TColor.gray,
@@ -212,7 +218,7 @@ class _LoginPageState extends State<LoginPage> {
                                 builder: (context) => SignUpView()));
                       },
                       child: Text(
-                        "Signup",
+                        "Đăng ký",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: TColor.primary,

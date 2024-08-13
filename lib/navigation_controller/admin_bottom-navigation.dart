@@ -70,19 +70,19 @@ class _AdminBottomNavigationState extends State<AdminBottomNavigation> {
           tabs: const [
             GButton(
               icon: Icons.home,
-              text: 'Item',
+              text: 'Sản phẩm',
             ),
             GButton(
               icon: Icons.map_outlined,
-              text: 'Restaurant',
+              text: 'Nhà hàng',
             ),
             GButton(
               icon: Icons.rate_review,
-              text: 'User Account',
+              text: 'Người dùng',
             ),
             GButton(
               icon: Icons.person,
-              text: 'Account',
+              text: 'Tài khoản',
             ),
           ],
           selectedIndex:
